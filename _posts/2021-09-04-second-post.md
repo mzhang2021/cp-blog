@@ -2,7 +2,7 @@
 layout: post
 title: "Second Post"
 author: max
-description: "Where does this description show up?"
+tags: [intro]
 featured: true
 ---
 Does this trigger Mailchimp?
