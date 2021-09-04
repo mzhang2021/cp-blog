@@ -7,7 +7,7 @@ favicon: 'assets/images/logo.png'
 baseurl: /cp-blog
 google_analytics: 'UA-46278016-1'
 disqus: 'cp-blog'
-mailchimp-list: 'https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b'
+mailchimp-list: 'https://github.us5.list-manage.com/subscribe/post?u=050187d5e93668b1230a86938&amp;id=3f46e29f01'
 include: ["_pages"]
 permalink: /:title/
 
