@@ -145,7 +145,7 @@ ga('send', 'pageview');
 
 </div>
 
-<!-- Categories Jumbotron
+<!-- Tags Jumbotron
 ================================================== -->
 <div class="jumbotron fortags">
 	<div class="d-md-flex h-100">
@@ -155,17 +155,17 @@ ga('send', 'pageview');
             </div>
 		</div>
 		<div class="col-md-8 p-5 align-self-center text-center">
-            {% assign categories_list = site.categories %}
-            {% if categories_list.first[0] == null %}
-                {% for category in categories_list %}
-                    <a class="mt-1 mb-1" href="{{site.baseurl}}/categories#{{ category | url_escape | strip | replace: ' ', '-' }}">{{ category | camelcase }} ({{ site.tags[category].size }})</a>
+            {% assign tags_list = site.tags %}
+            {% if tags_list.first[0] == null %}
+                {% for tag in tags_list %}
+                    <a class="mt-1 mb-1" href="{{site.baseurl}}/tags#{{ tag | url_escape | strip | replace: ' ', '-' }}">{{ tag | camelcase }} ({{ site.tags[tag].size }})</a>
                 {% endfor %}
             {% else %}
-                {% for category in categories_list %}
-                    <a class="mt-1 mb-1" href="{{site.baseurl}}/categories#{{ category[0] | url_escape | strip | replace: ' ', '-' }}">{{ category[0] | camelcase }} ({{ category[1].size }})</a>
+                {% for tag in tags_list %}
+                    <a class="mt-1 mb-1" href="{{site.baseurl}}/tags#{{ tag[0] | url_escape | strip | replace: ' ', '-' }}">{{ tag[0] | camelcase }} ({{ tag[1].size }})</a>
                 {% endfor %}
             {% endif %}
-            {% assign categories_list = nil %}
+            {% assign tags_list = nil %}
 		</div>
 	</div>
 </div>
