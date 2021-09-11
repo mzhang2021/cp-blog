@@ -12,7 +12,7 @@ Divide and conquer (D&Q for short) is a common and powerful problem solving para
 The core concept of D&Q is to divide your problem into subproblems, then combine them together in some way. Analyzing the time complexity of a D&Q algorithm isn't always obvious, and the most common way it's done in literature is using the [master theorem](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)). However, I personally don't find the master theorem very intuitive, so I prefer to just analyze the complexity by looking at the recursive tree of states. To explain what I mean, take a look at the following diagram for merge sort:
 
 ![image 1]({{ site.baseurl }}/assets/images/divide-and-conquer-1.png)
-<center><em>Image courtesy of <a href="https://www.interviewbit.com/tutorial/merge-sort-algorithm/">InterviewBit</a></em></center>
+<div style="text-align: center"><em>Image courtesy of <a href="https://www.interviewbit.com/tutorial/merge-sort-algorithm/">InterviewBit</a></em></div>
 
 To understand the complexity of merge sort, we note that the height of the recursive tree is at most $\mathcal O(\log n)$, because on each layer the size of the subarrays we are working with get halved, and you can only half an array of size $n$ at most $\log_2 n$ times. On each layer, we are merging together two subarrays from the next layer, and the sum of all subarray sizes is the size of the original array, or $n$. Since we do $\mathcal O(n)$ work on each of $\mathcal O(\log n)$ layers, the complexity of merge sort is $\mathcal O(n \log n)$.
 
@@ -57,6 +57,8 @@ One question left: what's the time complexity? One way of bounding the time comp
 Another approach is simply counting the number of total states. A naive bound would be $\mathcal O(n^2)$ states, since there are $\frac{n(n+1)}{2}$ possible subarrays, but we can prove a better bound. Consider this crudely drawn recursive tree:
 
 ![image 2]({{ site.baseurl }}/assets/images/divide-and-conquer-2.png)
+<div markdown="1" style="text-align: center">A circle with some $[l, r]$ written on it represents the recursive state `solve(l, r)`.
+</div>
 
 In this diagram, I actually include the minimum index still, so instead of splitting $[l, r]$ into $[l, m - 1]$ and $[m + 1, r]$, I split it into $[l, m]$ and $[m + 1, r]$. I do this because this is a general proof that extends to other problems, and including $m$ in one of the intervals can only make the complexity worse, so the proof still applies to this problem.
 
@@ -337,12 +339,16 @@ Hopefully you gleaned something from this tutorial! I tried to order the article
 
 ## Problems (Roughly Ordered Based on Techniques Used in Article)
 [Codeforces Round 689D: Divide and Summarize](https://codeforces.com/contest/1461/problem/D)
+
 [Codeforces Edu 105D: Dogeforces](https://codeforces.com/problemset/problem/1494/D)
+
 [Codeforces Round 429D: Destiny](https://codeforces.com/problemset/problem/840/D)
+
 [SPOJ ADACABAA: Ada and Species](https://www.spoj.com/problems/ADACABAA/)
 
 This is a very short list, so comment any other problems you know.
 
 ## References (For CDQ D&Q)
 [https://codeforces.com/blog/entry/68263?#comment-525816](https://codeforces.com/blog/entry/68263?#comment-525816)
+
 [https://assets.hkoi.org/training2018/dc.pdf](https://assets.hkoi.org/training2018/dc.pdf)
