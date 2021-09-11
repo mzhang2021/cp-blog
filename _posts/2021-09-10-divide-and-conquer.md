@@ -308,6 +308,7 @@ int main() {
 This final section refers to a specific application of D&Q: CDQ D&Q, which I first read about in [this Codeforces comment](https://codeforces.com/blog/entry/68263#comment-525816) and in the [linked PDF](https://assets.hkoi.org/training2018/dc.pdf). The general gist of the technique is as follows: say you have a data structure and two types of operations:
 1. Update the data structure.
 2. Query for some aggregate in the data structure.
+
 Additionally, say this problem is much easier to solve offline than online. That is, if all the update operations came before all the query operations, then there exists some offline algorithm to solve it. CDQ D&Q allows us to solve the online version with an extra $\mathcal O(\log n)$ factor.
 
 For our example problem, we'll use the one mentioned in [this blog](https://codeforces.com/blog/entry/68263). There is an online solution using 2D segment tree that solves this in $\mathcal O(q \log^2 q)$, but 2D segment tree has a non-trivial time and memory constant factor and is often difficult to squeeze into the problem bounds if not intended.
