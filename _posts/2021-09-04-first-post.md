@@ -31,8 +31,5 @@ I use [VS Code](https://code.visualstudio.com/) with some [scripts](https://gith
 ### Do you have an implementation library?
 [Yes.](https://github.com/mzhang2021/cp-library)
 
-### Any plans for other initiatives besides the blog (YouTube, Twitch, etc.)?
-Nah, those are saturated markets.
-
 ### I have a question that's not on here.
 Ask in the comments, and I might update this post with it.
