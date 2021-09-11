@@ -2,7 +2,6 @@
 layout: post
 title: "What Makes a Problem Hard?"
 tags: [opinion]
-featured: true
 usemathjax: true
 ---
 
