@@ -5,7 +5,7 @@ description: "Studies say your rating will increase exponentially after reading.
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
 baseurl: /cp-blog
-google_analytics: 'UA-46278016-1'
+google_analytics: 'UA-207435951-1'
 disqus: 'cp-blog'
 mailchimp-list: 'https://github.us5.list-manage.com/subscribe/post?u=050187d5e93668b1230a86938&amp;id=3f46e29f01'
 include: ["_pages"]
