@@ -12,15 +12,13 @@ Divide and conquer (D&Q for short) is a common and powerful problem solving para
 The core concept of D&Q is to divide your problem into subproblems, then combine them together in some way. Analyzing the time complexity of a D&Q algorithm isn't always obvious, and the most common way it's done in literature is using the [master theorem](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)). However, I personally don't find the master theorem very intuitive, so I prefer to just analyze the complexity by looking at the recursive tree of states. To explain what I mean, take a look at the following diagram for merge sort:
 
 ![image 1]({{ site.baseurl }}/assets/images/divide-and-conquer-1.png)
-<div style="text-align: center"><em>Image courtesy of <a href="https://www.interviewbit.com/tutorial/merge-sort-algorithm/">InterviewBit</a></em></div>
+<div style="text-align: center; margin-bottom: 5%"><em>Image courtesy of <a href="https://www.interviewbit.com/tutorial/merge-sort-algorithm/">InterviewBit</a></em></div>
 
 To understand the complexity of merge sort, we note that the height of the recursive tree is at most $\mathcal O(\log n)$, because on each layer the size of the subarrays we are working with get halved, and you can only half an array of size $n$ at most $\log_2 n$ times. On each layer, we are merging together two subarrays from the next layer, and the sum of all subarray sizes is the size of the original array, or $n$. Since we do $\mathcal O(n)$ work on each of $\mathcal O(\log n)$ layers, the complexity of merge sort is $\mathcal O(n \log n)$.
 
 This was a traditional simple example, so now let's jump into some harder problems!
 
-## Codeforces Edu 94E: Clear the Multiset
-
-[Problem Link](https://codeforces.com/problemset/problem/1400/E)
+## [Codeforces Edu 94E: Clear the Multiset](https://codeforces.com/problemset/problem/1400/E)
 
 The problem essentially translates to the following: given an array, you can perform two types of operations:
 1. Subtract 1 from some subarray of non-zero values.
@@ -30,7 +28,7 @@ What is the minimum number of operations to reduce the array to all 0s?
 
 There is an approach to this problem using dynamic programming, but let's consider a D&Q approach. Let's denote `solve(l, r)` as the minimum number of operations to reduce the subarray $a[l, r]$ to 0. For now, assume $a_i > 0$. An upper bound on our answer is `r - l + 1` by applying the type 2 operation to reduce each array element to 0. Now what if we want to perform type 1 operations? Note that it's always optimal to apply type 1 operations to the entire subarray, because that gets us closer to reducing all of them to 0. It is never optimal to use type 1 operations on some subset of the subarray, then type 2 operations in between, because we can achieve the same effect by applying type 1 operations to the entire array when possible and use less operations. We can apply type 1 operations until some element gets reduced to 0, which will first be the minimum element. After some index $a_m$ gets reduced to 0, we can compute and add `solve(l, m - 1)` and `solve(m + 1, r)` as subproblems. The code looks as follows:
 
-<details markdown="1"><summary>Click Me</summary>
+<details markdown="1" style="margin-bottom: 5%"><summary>Click Me</summary>
 
 ```c++
 int solve(int l, int r) {
@@ -57,7 +55,7 @@ One question left: what's the time complexity? One way of bounding the time comp
 Another approach is simply counting the number of total states. A naive bound would be $\mathcal O(n^2)$ states, since there are $\frac{n(n+1)}{2}$ possible subarrays, but we can prove a better bound. Consider this crudely drawn recursive tree:
 
 ![image 2]({{ site.baseurl }}/assets/images/divide-and-conquer-2.png)
-<div markdown="1" style="text-align: center">A circle with some $[l, r]$ written on it represents the recursive state `solve(l, r)`.
+<div markdown="1" style="text-align: center; margin-bottom: 5%">A circle with some $[l, r]$ written on it represents the recursive state `solve(l, r)`.
 </div>
 
 In this diagram, I actually include the minimum index still, so instead of splitting $[l, r]$ into $[l, m - 1]$ and $[m + 1, r]$, I split it into $[l, m]$ and $[m + 1, r]$. I do this because this is a general proof that extends to other problems, and including $m$ in one of the intervals can only make the complexity worse, so the proof still applies to this problem.
@@ -80,13 +78,11 @@ int solve(int l, int r, int delta) {
 ```
 </details>
 
-<details><summary>An Aside</summary>
+<details style="margin-bottom: 5%"><summary>An Aside</summary>
 If you're familiar with top-down dynamic programming, you may recognize the similarities in code. You could think of this D&Q strategy as a special case of dynamic programming, except we don't need to memoize because our recursive structure is a tree, so each state is visited exactly once. If we were to draw a "recursive tree of states" for a typical dynamic programming problem, it would likely not be a tree, but be a DAG instead, so we would need memoization.
 </details>
 
-## binarysearch.com: Every Sublist Containing Unique Element
-
-[Problem Link](https://binarysearch.com/problems/Every-Sublist-Containing-Unique-Element)
+## [binarysearch.com: Every Sublist Containing Unique Element](https://binarysearch.com/problems/Every-Sublist-Containing-Unique-Element)
 
 *I find this problem unusually hard for a coding interview question, especially one of "medium" difficulty, but I digress.*
 
@@ -94,7 +90,7 @@ We'll deploy a similar approach to the previous problem. Let `solve(l, r)` retur
 
 We can apply a simple optimization: instead of splitting just at one index, we can split at every unique index. That is, if $a_{m_1}, a_{m_2}, \dots, a_{m_k}$ are all unique elements, then we can split `solve(l, r)` into `solve(l, a[m_1] - 1)`, `solve(a[m_1] + 1, a[m_2] - 1)`, ..., `solve(a[m_k] + 1, r)`. While the worst case complexity is still $\mathcal O(n^2)$, this optimization is sufficient to get AC on this problem. Weak test cases I guess.
 
-<details markdown="1"><summary>Optimized $\mathcal O(n^2)$</summary>
+<details markdown="1" style="margin-bottom: 5%"><summary>Optimized $\mathcal O(n^2)$</summary>
 
 ```c++
 bool recur(int l, int r, const vector<int> &nums) {
@@ -130,15 +126,13 @@ It turns out this single optimization is sufficient to achieve $\mathcal O(n \lo
 
 Once again, we use the analogy of nodes and components that we used in the previous problem. Instead of thinking of it as splitting a graph into individual nodes, let's think in reverse: we have $n$ nodes, and want to merge them into one component. A state splitting into two other states now represents merging the two other states by adding an edge in between them. If we merge two components of size $a$ and $b$, we do $\min(a, b)$ work. Does this sound familiar? That's right, this is just [small-to-large](https://usaco.guide/plat/merging?lang=cpp) merging! Our recursive method is just doing small-to-large merging in reverse! And so by the same analysis as small-to-large merging, our runtime is $\mathcal O(n \log n)$.
 
-## HackerRank: Find the Path
-
-[Problem Link](https://www.hackerrank.com/challenges/shortest-path/problem)
+## [HackerRank: Find the Path](https://www.hackerrank.com/challenges/shortest-path/problem)
 
 A naive solution is to run Dijkstra for each query, giving us a $\mathcal O(nmq \log (nm))$ approach. It's difficult to improve upon this online algorithm with some sort of precomputation, because the optimal path could go "backwards" or wrap around in any arbitrary snake-like path. So as you might have guessed, we'll solve this problem offline with D&Q on the queries.
 
 Let's consider some recursive function `recur(l, r)` that will process queries with both endpoints lying in columns $[l, r]$. Consider column $m = \lfloor \frac{l + r}{2} \rfloor$. Any query with one endpoint to the left of this column and one endpoint to the right of this column must pass through this column at some point in its path. Another way of phrasing this is that any path between the two endpoints is a concatenation of two paths originating from column $m$. Since $n$ is small, we can brute force each cell in column $m$ and run Dijkstra from that cell, and update our answer for all queries accordingly. Afterwards, we call `recur(l, m)` and `recur(m + 1, r)`. We have a $\mathcal O(\log m)$ height recursive tree with $\mathcal O(n(nm \log (nm) + q))$ work on each layer, giving us $\mathcal O(n \log m (nm \log (nm) + q))$ as our final complexity.
 
-<details markdown="1"><summary>Old Messy Code Written 4 Months Ago</summary>
+<details markdown="1" style="margin-bottom: 5%"><summary>Old Messy Code Written 4 Months Ago</summary>
 
 ```c++
 #include <bits/stdc++.h>
@@ -221,9 +215,7 @@ int main() {
 ```
 </details>
 
-## CodeChef SEGPROD: Product on the Segment by Modulo
-
-[Problem Link](https://www.codechef.com/problems/SEGPROD)
+## [CodeChef SEGPROD: Product on the Segment by Modulo](https://www.codechef.com/problems/SEGPROD)
 
 This problem is very peculiar because of its abnormally large bounds and weird input method to facilitate that. Let's use the same approach as the previous problem, which is to D&Q on the queries. If our recursive method is currently processing the range $[l, r]$, then we can process all queries with the left endpoint $\leq m = \lfloor \frac{l + r}{2} \rfloor$ and right endpoint $> m$. To do this, we precompute $product[i, m]$ for all $l \leq i \leq m$ and $product[m + 1, i]$ for all $m < i \leq r$, and then each query is just the product of two precomputed values. Unfortunately, there are two issues with this approach:
 1. The problem forces us to solve it online, and this is an offline algorithm.
@@ -237,7 +229,7 @@ Next, to improve our query complexity, we'll use the following trick. Let's roun
 
 Notice anything peculiar? That's right, each state splits into two deeper states based on whether a bit is on or off. So to find the correct layer where the left and right endpoint of our query lie on different sides of $m$, we simply need to find the most significant bit where they differ. Or in other words, we need to find the most significant bit in the xor of the endpoints, which can be computed in $\mathcal O(1)$ using builtin functions like `__lg` or precomputing a lookup table. So we've reduced our complexity to $\mathcal O(n \log n + q)$, which is fast enough to get AC.
 
-<details markdown="1"><summary>Code</summary>
+<details markdown="1" style="margin-bottom: 5%"><summary>Code</summary>
 
 ```c++
 #include <bits/stdc++.h>
