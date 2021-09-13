@@ -6,7 +6,7 @@ featured: true
 usemathjax: true
 ---
 
-Divide and conquer (D&Q for short) is a common and powerful problem solving paradigm in the world of algorithms. There are numerous well-known examples such as merge sort and fast Fourier transform, and in this article I will cover some (maybe less common) applications of D&Q that are more specific to competitive programming.
+Divide and conquer (D&Q for short) is a common and powerful problem solving paradigm in the world of algorithms. There are numerous well-known examples such as merge sort and fast Fourier transform, and in this article I will cover some (maybe less common) applications of D&Q that are more specific to competitive programming. The sections progress from simple to complex, so more experienced competitors can skip to a later section of the article.
 
 ## Core Concept
 The core concept of D&Q is to divide our problem into subproblems, then combine them together in some way. Consider the classic example of merge sort, a D&Q algorithm to sort an array. Let's write a recursive function `sort(a)` which will sort the array $a$. First, we can split our array into two halves and sort each of those halves recursively with `sort(left)` and `sort(right)`:
