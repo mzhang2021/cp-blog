@@ -9,26 +9,100 @@ usemathjax: true
 Divide and conquer (D&Q for short) is a common and powerful problem solving paradigm in the world of algorithms. There are numerous well-known examples such as merge sort and fast Fourier transform, and in this article I will cover some (maybe less common) applications of D&Q that are more specific to competitive programming.
 
 ## Core Concept
-The core concept of D&Q is to divide your problem into subproblems, then combine them together in some way. Analyzing the time complexity of a D&Q algorithm isn't always obvious, and the most common way it's done in literature is using the [master theorem](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)). However, I personally don't find the master theorem very intuitive, so I prefer to just analyze the complexity by looking at the recursive tree of states. To explain what I mean, take a look at the following diagram for merge sort:
+The core concept of D&Q is to divide our problem into subproblems, then combine them together in some way. Consider the classic example of merge sort, a D&Q algorithm to sort an array. Let's write a recursive function `sort(a)` which will sort the array $a$. First, we can split our array into two halves and sort each of those halves recursively with `sort(left_half)` and `sort(right_half)`:
+
+```c++
+void sort(vector<int> &a) {
+    int n = (int) a.size();
+    if (n == 1)
+        return;
+    int m = n / 2;
+    // two halves denoted "left" and "right"
+    vector<int> left, right;
+    for (int i=0; i<m; i++)
+        left.push_back(a[i]);
+    for (int i=m; i<n; i++)
+        right.push_back(a[i]);
+    sort(left);
+    sort(right);
+    // now we need to combine the result of the two halves in some way
+}
+```
+
+Then, after we've sorted the two individual halves, we can merge them together in linear time with the following algorithm:
+
+```c++
+// merges two sorted arrays into one sorted array
+int n = (int) left.size(), m = (int) right.size(), i = 0, j = 0;
+vector<int> comb;
+while (i < n || j < m) {
+    if (i < n && (j == m || left[i] < right[j]))
+        comb.push_back(left[i++]);
+    else
+        comb.push_back(right[j++]);
+}
+```
+
+<details markdown="1" style="margin-bottom: 5%"><summary>Complete Mergesort Code</summary>
+
+```c++
+vector<int> merge(const vector<int> &left, const vector<int> &right) {
+    int n = (int) left.size(), m = (int) right.size(), i = 0, j = 0;
+    vector<int> comb;
+    while (i < n || j < m) {
+        if (i < n && (j == m || left[i] < right[j]))
+            comb.push_back(left[i++]);
+        else
+            comb.push_back(right[j++]);
+    }
+    return comb;
+}
+
+void sort(vector<int> &a) {
+    int n = (int) a.size();
+    if (n == 1)
+        return;
+    int m = n / 2;
+    vector<int> left, right;
+    for (int i=0; i<m; i++)
+        left.push_back(a[i]);
+    for (int i=m; i<n; i++)
+        right.push_back(a[i]);
+    sort(left);
+    sort(right);
+    a = merge(left, right);
+}
+```
+</details>
+
+In general, the code for any divide and conquer algorithm might look something like this:
+
+```
+solve(whole part) {
+    solve(left part)
+    solve(right part)
+    combine(result of solve(left part), result of solve(right part))
+}
+```
+
+Analyzing the time complexity of a D&Q algorithm isn't always obvious, and the most common way it's done in literature is using the [master theorem](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)). However, I personally don't find the master theorem very intuitive, so I prefer to just analyze the complexity by looking at the recursive tree of states. To explain what I mean, take a look at the following diagram for merge sort:
 
 ![image 1]({{ site.baseurl }}/assets/images/divide-and-conquer-1.png)
 <div style="text-align: center; margin-bottom: 5%"><em>Image courtesy of <a href="https://www.interviewbit.com/tutorial/merge-sort-algorithm/">InterviewBit</a></em></div>
 
-To understand the complexity of merge sort, we note that the height of the recursive tree is at most $\mathcal O(\log n)$, because on each layer the size of the subarrays we are working with get halved, and you can only half an array of size $n$ at most $\log_2 n$ times. On each layer, we are merging together two subarrays from the next layer, and the sum of all subarray sizes is the size of the original array, or $n$. Since we do $\mathcal O(n)$ work on each of $\mathcal O(\log n)$ layers, the complexity of merge sort is $\mathcal O(n \log n)$.
+To understand the complexity of merge sort, we note that the height of the recursive tree is at most $\mathcal O(\log n)$, because on each layer the size of the subarrays we are working with get halved, and we can only half an array of size $n$ at most $\log_2 n$ times. On each layer, we are merging together two subarrays from the next layer, and the sum of all subarray sizes is the size of the original array, or $n$. Since we do $\mathcal O(n)$ work on each of $\mathcal O(\log n)$ layers, the complexity of merge sort is $\mathcal O(n \log n)$.
 
 This was a traditional simple example, so now let's jump into some harder problems!
 
 ## [Codeforces Edu 94E: Clear the Multiset](https://codeforces.com/problemset/problem/1400/E)
 
-The problem essentially translates to the following: given an array, you can perform two types of operations:
+The problem essentially translates to the following: given an array, we can perform two types of operations:
 1. Subtract 1 from some subarray of non-zero values.
 2. Subtract any positive $x$ from any one value.
 
 What is the minimum number of operations to reduce the array to all 0s?
 
 There is an approach to this problem using dynamic programming, but let's consider a D&Q approach. Let's denote `solve(l, r)` as the minimum number of operations to reduce the subarray $a[l, r]$ to 0. For now, assume $a_i > 0$. An upper bound on our answer is `r - l + 1` by applying the type 2 operation to reduce each array element to 0. Now what if we want to perform type 1 operations? Note that it's always optimal to apply type 1 operations to the entire subarray, because that gets us closer to reducing all of them to 0. It is never optimal to use type 1 operations on some subset of the subarray, then type 2 operations in between, because we can achieve the same effect by applying type 1 operations to the entire array when possible and use less operations. We can apply type 1 operations until some element gets reduced to 0, which will first be the minimum element. After some index $a_m$ gets reduced to 0, we can compute and add `solve(l, m - 1)` and `solve(m + 1, r)` as subproblems. The code looks as follows:
-
-<details markdown="1" style="margin-bottom: 5%"><summary>Click Me</summary>
 
 ```c++
 int solve(int l, int r) {
@@ -46,8 +120,8 @@ int solve(int l, int r) {
     return min(solve(l, idx - 1) + solve(idx + 1, r) + mn, r - l + 1);
 }
 ```
-As an aside, notice that this code allows applying type 2 operations on some $a_i = 0$, which is technically not allowed. Luckily, we will never do that in the optimal solution anyways, so it's ok that our code permits this possibility. This is actually a very common trick in CP: relaxing the conditions of the problem to ease the implementation because we know the optimal solution will follow a stricter set of conditions. [This problem](https://codeforces.com/contest/1473/problem/E) is another example of that trick (though it's not a D&Q problem).
-
+<details markdown="1" style="margin-bottom: 5%"><summary>An Aside</summary>
+Notice that this code allows applying type 2 operations on some $a_i = 0$, which is technically not allowed. Luckily, we will never do that in the optimal solution anyways, so it's ok that our code permits this possibility. This is actually a very common trick in CP: relaxing the conditions of the problem to ease the implementation because we know the optimal solution will follow a stricter set of conditions. [This problem](https://codeforces.com/contest/1473/problem/E) is another example of that trick (though it's not a D&Q problem).
 </details>
 
 One question left: what's the time complexity? One way of bounding the time complexity is doing the same thing we did in our merge sort example: bound the height of the recursive tree and the amount of work we perform on each height. The worst case would be doing uneven splits every time (i.e. always having the minimum element be $l$): $[1, n] \implies [2, n] \implies [3, n] \implies \dots$, giving us $\mathcal O(n)$ height. On each layer, we iterate over all the elements in the array at most once in one of the states on that layer, giving us $\mathcal O(n)$ work per layer, so our complexity is $\mathcal O(n^2)$, which is fast enough for the constraints of this problem.
@@ -60,7 +134,7 @@ Another approach is simply counting the number of total states. A naive bound wo
 
 In this diagram, I actually include the minimum index still, so instead of splitting $[l, r]$ into $[l, m - 1]$ and $[m + 1, r]$, I split it into $[l, m]$ and $[m + 1, r]$. I do this because this is a general proof that extends to other problems, and including $m$ in one of the intervals can only make the complexity worse, so the proof still applies to this problem.
 
-Now here's the intuition: let's pretend indices $1, 2, \dots, n$ actually refer to nodes in a graph. The state $[l, r]$ refers to a connected component of vertices $l, l + 1, \dots, r$. And initially, we have $[1, n]$ representing a line graph with edges connecting $(i, i + 1)$ for all $1 \leq i < n$, or $n - 1$ total edges. What does a split of a state into two other states represent in this analogy? It represents deleting some edge $(m, m + 1)$ and splitting the component into two separate ones. And since you can only delete at most $n - 1$ edges, we only have at most $2(n - 1) + 1$ states, or $\mathcal O(n)$ states! A naive bound on the amount of work we do at each state is $\mathcal O(n)$, so the complexity is $\mathcal O(n^2)$.
+Now here's the intuition: let's pretend indices $1, 2, \dots, n$ actually refer to nodes in a graph. The state $[l, r]$ refers to a connected component of vertices $l, l + 1, \dots, r$. And initially, we have $[1, n]$ representing a line graph with edges connecting $(i, i + 1)$ for all $1 \leq i < n$, or $n - 1$ total edges. What does a split of a state into two other states represent in this analogy? It represents deleting some edge $(m, m + 1)$ and splitting the component into two separate ones. And since we can only delete at most $n - 1$ edges, we only have at most $2(n - 1) + 1$ states, or $\mathcal O(n)$ states! A naive bound on the amount of work we do at each state is $\mathcal O(n)$, so the complexity is $\mathcal O(n^2)$.
 
 Notice that our second way of analyzing the complexity more easily lends itself to a subquadratic solution. Instead of naively iterating to find the minimum index, we can use a [RMQ sparse table](https://cp-algorithms.com/data_structures/sparse-table.html#toc-tgt-3) to instantly find it in $\mathcal O(1)$. And instead of subtracting `mn` from each index like in the code above, we notice that we're simply subtracting `mn` from every array element, so we can instead maintain some extra parameter `delta` in our recursive method to keep track of how much we've subtracted from all elements in our current range. So we've now reduced the amount of work done at each state to $\mathcal O(1)$, giving us an $\mathcal O(n)$ or $\mathcal O(n \log n)$, depending on how we precompute our sparse table.
 
@@ -297,7 +371,7 @@ int main() {
 </details>
 
 ## CDQ Divide and Conquer
-This final section refers to a specific application of D&Q: CDQ D&Q, which I first read about in [this Codeforces comment](https://codeforces.com/blog/entry/68263#comment-525816) and in the [linked PDF](https://assets.hkoi.org/training2018/dc.pdf). The general gist of the technique is as follows: say you have a data structure and two types of operations:
+This final section refers to a specific application of D&Q: CDQ D&Q, which I first read about in [this Codeforces comment](https://codeforces.com/blog/entry/68263#comment-525816) and in the [linked PDF](https://assets.hkoi.org/training2018/dc.pdf). The general gist of the technique is as follows: say we have a data structure and two types of operations:
 1. Update the data structure.
 2. Query for some aggregate in the data structure.
 
