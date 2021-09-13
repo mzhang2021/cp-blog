@@ -17,7 +17,7 @@ Competitive programming (or CP for short) refers to programming competitions whe
 
 ### Why not just post blogs on Codeforces? Why make a separate blog?
 1. I'm trying to learn web development anyways, so I figured I'd make my first personal web dev project this blog.
-2. Not everything I post here will be useful for the general public, and I didn't want to spam on Codeforces forums. Occasionally, if I write some really useful tutorial or something, I might consider making a redirect post on Codeforces.
+2. Not everything I post here will be useful for the general public, and I don't want to spam on Codeforces forums. Occasionally, if I write some really useful tutorial or something, I might consider making a redirect post on Codeforces.
 
 ### How often will you post?
 Whenever I have a good idea, I'll try to make a post. In practice it'll probably be every two weeks. You can subscribe to the mailing list by scrolling down and filling in the form in the alert so that you get notified whenever I post.
