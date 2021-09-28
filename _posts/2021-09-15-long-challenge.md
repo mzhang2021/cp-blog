@@ -2,7 +2,6 @@
 layout: post
 title: "Long Challenges are Awesome"
 tags: [opinion]
-featured: true
 usemathjax: true
 ---
 

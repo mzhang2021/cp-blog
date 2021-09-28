@@ -2,7 +2,6 @@
 layout: post
 title: "Applications of Divide and Conquer"
 tags: [tutorial, algo]
-featured: true
 usemathjax: true
 ---
 
