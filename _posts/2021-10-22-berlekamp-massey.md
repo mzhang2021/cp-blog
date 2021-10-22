@@ -93,6 +93,8 @@ s_{i+1} &= (c_1 + 1) s_{i} + (c_2 - c_1) s_{i-1} + (c_3 - c_2) s_{i-2} + \dots +
 \end{align*}
 $$
 
+---
+
 </details>
 
 Here are some more examples (and one non-example) of linear recurrences:
@@ -107,6 +109,8 @@ $$
 
 This linear recurrence is the well-known Fibonacci sequence.
 
+---
+
 </details>
 
 <details markdown="1" style="margin-bottom: 5%"><summary>Example 2</summary>
@@ -119,6 +123,8 @@ $$
 
 Despite this linear recurrence appearing to only have 1 term, we will still refer to it as having length 2. There is an implicit $0 \cdot s_{i-1}$ term. Essentially, we define length as the number of base case terms necessary.
 
+---
+
 </details>
 
 <details markdown="1" style="margin-bottom: 5%"><summary>Example 3</summary>
@@ -128,6 +134,8 @@ s_i = 0
 $$
 
 This is technically a homogeneous linear recurrence, albeit a trivial example.
+
+---
 
 </details>
 
@@ -141,6 +149,8 @@ s_2 = 1
 $$
 
 The above recurrence is **not** a linear recurrence. This is because the $s_{i-1} s_{i-2}$ term violates the linear condition, as it's not a constant times a single previous term. This would be a [quadratic recurrence](https://mathworld.wolfram.com/QuadraticRecurrenceEquation.html).
+
+---
 
 </details>
 
@@ -176,6 +186,8 @@ $$
 
 The last line is because $s_n$ satisfies the recurrence relation $s_i = \sum_{j=1}^n c_j s_{i-j}$.
 
+---
+
 </details>
 
 And similarly, what is $G(x f(x))$? Or $G(x^2 f(x))$? Or $G(f(x) g(x))$ for any arbitrary polynomial $g(x)$?
@@ -194,6 +206,8 @@ G(x^2 f(x)) &= G(x^{n+2} - \sum_{j=1}^n c_j x^{n+2-j}) \\
 $$
 
 A similar proof applies to $G(x^k f(x))$ for any arbitrary $k$. And thus, $G(f(x) g(x)) = 0$ as well because we can distribute over the terms of $g$, pull out the scalar, and apply our knowledge of $G(x^k f(x)) = 0$.
+
+---
 
 </details>
 
@@ -254,6 +268,8 @@ vector<T> mul(const vector<T> &a, const vector<T> &b) {
     return ret;
 }
 ```
+
+---
 
 </details>
 
@@ -317,6 +333,8 @@ After Step 4: $d = \\{-3, 3\\}$
 
 After Step 5: $d = \\{0, 0, -3, 3\\}$
 
+---
+
 </details>
 
 So we have $d = \\{0, 0, -3, 3\\}$. I know this seems super arbitrary, but let's evaluate $d$ and see what happens:
@@ -358,6 +376,8 @@ After Step 3: $d = \\{1, -2\\}$
 After Step 4: $d = \\{-58, 116\\}$
 
 After Step 5: $d = \\{0, 0, -58, 116\\}$
+
+---
 
 </details>
 
@@ -406,6 +426,8 @@ d(j + 1) &= \sum_{k=1}^n d_k s_{j+1-k} \\
 \end{align*}
 $$
 
+---
+
 </details>
 
 We know that $d(j) = 0$ for $j \leq f$ and $d(f + 1) \neq 0$. After multiplying the sequence by $\frac{\Delta}{d(f + 1)}$ per step 4, we get that $d(j) = 0$ for $j \leq f$ still holds true, but now $d(f + 1) = \Delta$.
@@ -413,6 +435,8 @@ We know that $d(j) = 0$ for $j \leq f$ and $d(f + 1) \neq 0$. After multiplying 
 <details markdown="1" style="margin-bottom: 5%"><summary>Why?</summary>
 
 You didn't forget the identity $k \cdot c(i) = (kc)(i)$, did you?
+
+---
 
 </details>
 
@@ -455,6 +479,8 @@ $$
 $$
 
 Yes, the extra trailing 0s matter! Without them, $s_4$ would not be part of the base case!
+
+---
 
 </details>
 
@@ -551,6 +577,8 @@ Do you really understand everything I just explained? If so, try your hand at so
     \end{align*}
     $$
 
+    ---
+
     </details>
 
 2. Find the intermediate sequences of $c$ after each step of the algorithm on $s = \\{1, 8, 10, 26, 46\\}$.
@@ -568,6 +596,8 @@ Do you really understand everything I just explained? If so, try your hand at so
     i = 4&: c = \{1, 2\}
     \end{align*}
     $$
+
+    ---
 
     </details>
 
@@ -589,6 +619,8 @@ Do you really understand everything I just explained? If so, try your hand at so
     i = 7&: c = \{3, -1, -1\}
     \end{align*}
     $$
+
+    ---
 
     </details>
 
@@ -720,6 +752,8 @@ Some notes about this implementation:
 - We also append a 1 at the beginning of `c` and `b`. You can figure out why this works by tracing the code.
 - This implementation also takes care of the first step, all with the same logic!
 
+---
+
 </details>
 
 ## Applications in Problems <a name="applications"></a>
@@ -731,6 +765,8 @@ Take this [Codeforces problem](https://codeforces.com/contest/1511/problem/F) fo
 <details markdown="1" style="margin-bottom: 5%"><summary>Naive DP Solution</summary>
 
 Let $dp[i][a][b][c][d]$ be the number of chainwords of length $i$, where the final character in the chainword is the $b$th character of the $a$th word and the $d$th character of the $c$th word. Essentially, we maintain what segment we are on for the top and bottom hints. Let $L \leq 5$ be the maximum length of a dictionary word. The complexity of this algorithm is something like $\mathcal O(n^4 L^2 m)$, depending on how you implement your transitions.
+
+---
 
 </details>
 
@@ -751,6 +787,8 @@ So using this idea, we can compress $dp[i][a][b][c][d]$ down to 2 dimensions, $d
 The [Cayley-Hamilton theorem](https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem) states that if $A$ is of dimension $n \times n$, then $A^i$ satisfies a linear recurrence of length $n$ with coefficients of the characteristic polynomial. Specifically, it states $A^n = \sum_{j=1}^n c_j A^{n-j}$, and then we can generalize that to a linear recurrence for $A^i$ by multiplying both sides by $A^{i-n}$.
 
 Now, I'm stuck, because I don't think a linear recurrence for $A^m$ necessarily signifies a linear recurrence for a specific entry of $dp[m]$. If anyone knows something about this, I'd be dying to hear about it. As a bonus, it's worth noting that you don't have to rely on faith that a linear recurrence exists for a specific entry of $dp[m]$, and instead just compute $A^m dp[0]$ directly as explained in [this blog](https://codeforces.com/blog/entry/85969). The idea is to generate some $1 \times n$ vector $\vec w$ to left multiply with $A^m dp[0]$ to convert from vector to scalar. Then, we can plug these scalar values into Berlekamp-Massey.
+
+---
 
 </details>
 
@@ -781,6 +819,8 @@ s_k &= \sum_{j=1}^n c_j s_{k-j} \\
 $$
 
 Notice that $k - j - l$ never becomes negative since $k \geq 2n$, which is why this proof doesn't work when we only provide $2n - 1$ or less elements for Berlekamp-Massey.
+
+---
 
 </details>
 
