@@ -2,7 +2,6 @@
 layout: post
 title: "Self Reflection and What's Next?"
 tags: [personal, opinion]
-featured: true
 ---
 
 It's been a month since my last major milestone in CP, and high time for some self reflection. There are two major CP competitions I competed in this month: Facebook Hacker Cup, and Kotlin Heroes 8.

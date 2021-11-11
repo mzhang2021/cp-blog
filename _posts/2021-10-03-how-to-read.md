@@ -2,7 +2,6 @@
 layout: post
 title: "How to Understand Hard Tutorials"
 tags: [tutorial, opinion]
-featured: true
 usemathjax: true
 ---
 
