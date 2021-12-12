@@ -170,7 +170,7 @@ If we make $p$ a segment tree, we can query for the number of valid subarrays fo
 
 Here are some other problems where I've used historic information. I don't have many at the moment, so if you have any more feel free to let me know.
 
-[SPOJ GSS2: Can you answer these queries II](https://www.spoj.com/problems/GSS2/)
+### [SPOJ GSS2: Can you answer these queries II](https://www.spoj.com/problems/GSS2/)
 
 <details markdown="1" style="margin-bottom: 5%"><summary>Solution Sketch</summary>
 
@@ -180,7 +180,7 @@ Similar to the 2020 ICPC Asia East Continent Final problem explained above: line
 
 </details>
 
-[Codeforces Round 751, Div 1 C: Optimal Insertion](https://codeforces.com/contest/1601/problem/C)
+### [Codeforces Round 751, Div 1 C: Optimal Insertion](https://codeforces.com/contest/1601/problem/C)
 
 <details markdown="1" style="margin-bottom: 5%"><summary>Solution Sketch</summary>
 
@@ -192,7 +192,7 @@ Compress the input to values in the range $1, 2, \dots, n + m$. It's optimal to 
 
 </details>
 
-[UOJ 164](https://uoj.ac/problem/164)
+### [UOJ 164](https://uoj.ac/problem/164)
 
 Translation: Support the following operations:
 
@@ -207,6 +207,18 @@ Translation: Support the following operations:
 This is the example problem for historic information described [here](https://codeforces.com/blog/entry/57319). The blog also contains the solution.
 
 [Submission for Reference](https://uoj.ac/submission/519426)
+
+---
+
+</details>
+
+### [XXII Open Cup, Grand Prix of Nanjing, Problem E: Paimon Segment Tree](https://codeforces.com/gym/103470/problem/E)
+
+<details markdown="1" style="margin-bottom: 5%"><summary>Solution Sketch</summary>
+
+It literally says "historical values" in the problem statement 🤔. Maintaining the historical squared sum is just adding some extra values on top of maintaining the historical sum, so I'll let you work out the details. If you're stuck, you can refer to my code [here](https://ideone.com/2zIHRs).
+
+P.S. Don't actually use persistent segment trees as the problem suggests, just split the query into $\text{query}(1, r) - \text{query}(1, l - 1)$.
 
 ---
 
