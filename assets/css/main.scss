@@ -13,3 +13,28 @@
 	"syntax",
     "starsnonscss"
 ;
+
+// https://stackoverflow.com/a/47196589
+.close-btn {
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    opacity: 0.3;
+}
+.close-btn:hover {
+    opacity: 1;
+}
+.close-btn:before, .close-btn:after {
+    position: absolute;
+    left: 100%;
+    content: " ";
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+.close-btn:before {
+    transform: rotate(45deg);
+}
+.close-btn:after {
+    transform: rotate(-45deg);
+}

@@ -2,7 +2,6 @@
 layout: post
 title: "Trivialize Linear Recurrence Problems with Berlekamp-Massey!"
 tags: [tutorial, math]
-featured: true
 usemathjax: true
 ---
 

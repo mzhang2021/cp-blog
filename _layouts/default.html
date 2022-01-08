@@ -139,6 +139,14 @@ ga('send', 'pageview');
             <input type="submit" value="Subscribe" name="subscribe" class="heart">
             </div>
         </form>
+        <a class="close-btn"></a>
+        <script>
+            $(document).ready(function() {
+                $(".close-btn").click(function() {
+                    $(".alertbar").remove();
+                });
+            });
+        </script>
 	</div>
 </div>
 {% endif %}
