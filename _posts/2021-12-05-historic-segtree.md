@@ -2,7 +2,6 @@
 layout: post
 title: "Historic Information on Segment Trees"
 tags: [tutorial, algo]
-featured: true
 usemathjax: true
 ---
 

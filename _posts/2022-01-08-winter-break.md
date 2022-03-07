@@ -2,7 +2,6 @@
 layout: post
 title: "A Competitive Winter Break"
 tags: [personal]
-featured: true
 usemathjax: true
 ---
 
