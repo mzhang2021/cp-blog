@@ -695,11 +695,11 @@ Case 2a: The left endpoint of the old version is greater than or equal to the le
 
 Case 2b: The left endpoint of the old version is less than the left endpoint of our current recurrence. In this case, the length of our new recurrence does change! Recall our theorem, which states that $L_i \geq \max(L_{i-1}, i + 1 - L_{i-1})$ when our recurrence changes. Since the length is getting longer, it must be that $L_i \geq i + 1 - L_{i-1}$. Let's prove that our algorithm always yields $L_i = i + 1 - L_{i-1}$.
 
-Let the index where our previous version failed be $m$. Notice that every time we update the previous version, it's when the recurrence got longer. So $L_{m-1} < L_m = L_{m+1} = \dots = L_{i-1}$. By induction, $L_m = \max(L_{m-1}, m + 1 - L_{m-1})$. Since $L_m > L_{m-1}$, $L_m = m + 1 - L_{m-1}$, or $L_{m-1} = m + 1 - L_m = m + 1 - L_{i-1}$. Now, note that if the previous version failed at index $m$ and we are currently at index $i$, the length of the new recurrence will be $i - m + L_m$ (look at the diagram of segments above if you're unsure). Finally,
+Let the index where our previous version failed be $m$. Notice that every time we update the previous version, it's when the recurrence got longer. So $L_{m-1} < L_m = L_{m+1} = \dots = L_{i-1}$. By induction, $L_m = \max(L_{m-1}, m + 1 - L_{m-1})$. Since $L_m > L_{m-1}$, $L_m = m + 1 - L_{m-1}$, or $L_{m-1} = m + 1 - L_m = m + 1 - L_{i-1}$. Now, note that if the previous version failed at index $m$ and we are currently at index $i$, the length of the new recurrence will be $i - m + L_{m-1}$ (look at the diagram of segments above if you're unsure). Finally,
 
 $$
 \begin{align*}
-L_i &= i - m + L_m \\
+L_i &= i - m + L_{m-1} \\
 &= i - m + (m + 1 - L_{i-1}) \\
 &= i + 1 - L_{i-1}
 \end{align*}
@@ -785,7 +785,9 @@ So using this idea, we can compress $dp[i][a][b][c][d]$ down to 2 dimensions, $d
 
 The [Cayley-Hamilton theorem](https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem) states that if $A$ is of dimension $n \times n$, then $A^i$ satisfies a linear recurrence of length $n$ with coefficients of the characteristic polynomial. Specifically, it states $A^n = \sum_{j=1}^n c_j A^{n-j}$, and then we can generalize that to a linear recurrence for $A^i$ by multiplying both sides by $A^{i-n}$.
 
-Now, I'm stuck, because I don't think a linear recurrence for $A^m$ necessarily signifies a linear recurrence for a specific entry of $dp[m]$. If anyone knows something about this, I'd be dying to hear about it. As a bonus, it's worth noting that you don't have to rely on faith that a linear recurrence exists for a specific entry of $dp[m]$, and instead just compute $A^m dp[0]$ directly as explained in [this blog](https://codeforces.com/blog/entry/85969). The idea is to generate some $1 \times n$ vector $\vec w$ to left multiply with $A^m dp[0]$ to convert from vector to scalar. Then, we can plug these scalar values into Berlekamp-Massey.
+~~Now, I'm stuck, because I don't think a linear recurrence for $A^m$ necessarily signifies a linear recurrence for a specific entry of $dp[m]$. If anyone knows something about this, I'd be dying to hear about it. As a bonus, it's worth noting that you don't have to rely on faith that a linear recurrence exists for a specific entry of $dp[m]$, and instead just compute $A^m dp[0]$ directly as explained in [this blog](https://codeforces.com/blog/entry/85969). The idea is to generate some $1 \times n$ vector $\vec w$ to left multiply with $A^m dp[0]$ to convert from vector to scalar. Then, we can plug these scalar values into Berlekamp-Massey.~~
+
+From here, showing a linear recurrence exists for $dp[m]$ can be done with some algebra. User shioko on Codeforces has worked out the details [here](https://codeforces.com/blog/entry/96199?#comment-903177).
 
 ---
 
