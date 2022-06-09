@@ -2,7 +2,6 @@
 layout: post
 title: "My First Ever ICPC Regionals Experience!"
 tags: [personal]
-featured: true
 usemathjax: true
 ---
 
