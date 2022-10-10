@@ -2,7 +2,6 @@
 layout: post
 title: "A Shift in Perspective"
 tags: [tutorial]
-featured: true
 usemathjax: true
 ---
 
