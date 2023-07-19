@@ -31,7 +31,11 @@ Min cost flow as a function of amount of flow is convex. This makes intuitive se
 
 ## [Codeforces 802O: April Fools' Problem](https://codeforces.com/contest/802/problem/O)
 
-The actual problem statement is in the [medium version](https://codeforces.com/contest/802/problem/N) of this problem.
+**Statement Summary:** You are preparing and printing $k$ problems for a contest over the course of $n$ days. On the $i$th day, you can prepare a problem for cost $a_i$ and print a problem for cost $b_i$. You must prepare a problem before printing it. In other words, if you prepare a problem on day $i$, you can only print it on some day $j \geq i$. You can prepare and print at most one problem per day. What is the minimum cost of preparing and printing $k$ problems?
+
+**Constraints:** $1 \leq k \leq n \leq 5 \cdot 10^5, 1 \leq a_i, b_i \leq 10^9$
+
+---
 
 Let's first think about solving this with flows. One straightforward way is to create $2n + 2$ nodes: a source $s$ and sink $t$, plus nodes representing $a_i$ and $b_i$ for each $i$. We add the following edges:
 
@@ -187,6 +191,12 @@ So with this first example, we can see two different solutions that arise from t
 
 ## [Codeforces 866D: Buy Low Sell High](https://codeforces.com/contest/866/problem/D)
 
+**Statement Summary:** You have knowledge of the price of a stock over the next $n$ days. On the $i$th day it will have price $p_i$. On each day you can either buy one share of the stock, sell one existing share you currently have, or do nothing. You cannot sell shares you do not have. What is the maximum possible profit you can earn?
+
+**Constraints:** $2 \leq n \leq 3 \cdot 10^5, 1 \leq p_i \leq 10^6$
+
+---
+
 This problem has several interpretations that lead to the same code. You can think of it as slope trick. Or as greedy. Let's think about it as flows.
 
 Firstly, we can loosen the restrictions by allowing for both buying and selling a stock on a given day. This won't change the answer since both buying and selling on the same day is equivalent to doing nothing.
@@ -236,6 +246,12 @@ for (int i=n-1; i>=0; i--) {
 </details>
 
 ## [CSES Programmers and Artists](https://cses.fi/problemset/task/2426)
+
+**Statement Summary:** You have $n$ people, the $i$th person has $x_i$ amount of programming skill and $y_i$ amount of art skill. Each person can be assigned to be a programmer, artist, or neither. You need exactly $a$ programmers and $b$ artists. What is the maximum sum of skills attainable by some matching?
+
+**Constraints:** $1 \leq n \leq 2 \cdot 10^5, a + b \leq n, 1 \leq x_i, y_i \leq 10^9$
+
+---
 
 You get the drill now. Let's model this problem as a flow network. Here is one possible construction using $n + 4$ nodes.
 
